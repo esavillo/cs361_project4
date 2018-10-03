@@ -8,14 +8,25 @@ Date: 10/02/18
 package proj4FengLianMarcelloSavillo;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
-import java.util.ArrayList;
 
-
+/**
+ * Controller is the main controller for the application.
+ * It itself doesn't handle much. What it does is delegate
+ * tasks to either of the sub controllers, FileMenuController or
+ * EditMenuController.
+ *
+ *  @author Yi Feng
+ *  @author Iris Lian
+ *  @author Chris Marcello
+ *  @author Evan Savillo
+ */
 public class Controller
 {
     @FXML
@@ -71,7 +82,8 @@ public class Controller
     /**
      * Handles the open button action.
      * Opens a dialog in which the user can select a file to open.
-     * If the user chooses a valid file, a new tab is created and the file is loaded into the text area.
+     * If the user chooses a valid file, a new tab is created and the file
+     * is loaded into the text area.
      * If the user cancels, the dialog disappears without doing anything.
      */
     @FXML
@@ -82,9 +94,10 @@ public class Controller
 
     /**
      * Handles the close button action.
-     * If the current text area has already been saved to a file, then the current tab is closed.
-     * If the current text area has been changed since it was last saved to a file, a dialog
-     * appears asking whether you want to save the text before closing it.
+     * If the current text area has already been saved to a file, then
+     * the current tab is closed.
+     * If the current text area has been changed since it was last saved to a file,
+     * a dialog appears asking whether you want to save the text before closing it.
      */
     @FXML
     private void handleCloseMenuItemAction(ActionEvent event)
@@ -96,10 +109,12 @@ public class Controller
      * Handles the Save As button action.
      * Shows a dialog in which the user is asked for the name of the file into
      * which the contents of the current text area are to be saved.
-     * If the user enters any legal name for a file and presses the OK button in the dialog,
+     * If the user enters any legal name for a file and presses the OK button
+     * in the dialog,
      * then creates a new text file by that name and write to that file all the current
      * contents of the text area so that those contents can later be reloaded.
-     * If the user presses the Cancel button in the dialog, then the dialog closes and no saving occurs.
+     * If the user presses the Cancel button in the dialog, then the dialog closes
+     * and no saving occurs.
      */
     @FXML
     private void handleSaveAsMenuItemAction()
@@ -230,6 +245,15 @@ public class Controller
     }
 
     /**
+     * Reads in the application's main stage.
+     * For use in Filechooser dialogs
+     */
+    public void setPrimaryStage(Stage primaryStage)
+    {
+        this.primaryStage = primaryStage;
+    }
+
+    /**
      * This function is called after the FXML fields are populated.
      * Initializes the tab file map with the default tab.
      * and passes necessary items
@@ -239,9 +263,21 @@ public class Controller
         fileMenuController.recieveFXMLElements(this.passFXMLElements());
         editMenuController.recieveFXMLElements(this.passFXMLElements());
 
+        // eats the command to quit from the window itself
+        fileMenuController.primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            this.handleExitMenuItemAction();
+        });
+
         this.handleNewMenuItemAction();
     }
 
+    /**
+     * Method which creates an array of necessary elements needed by
+     * the subcontrollers, which is passed in initialize().
+     *
+     * @return list containing necessary elements
+     */
     public Object[] passFXMLElements()
     {
         Object[] FXMLElementList = {

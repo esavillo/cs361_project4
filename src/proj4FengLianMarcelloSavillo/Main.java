@@ -8,12 +8,14 @@ Date: 10/02/18
 package proj4FengLianMarcelloSavillo;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.stage.WindowEvent;
 
-//TODO: update authortags and jdocs
 
 /**
  * Creates a JavaFX application that contains an area for
@@ -27,6 +29,9 @@ import javafx.scene.Parent;
  * @author Liwei Jiang
  * @author Iris Lian
  * @author Tracy Quan
+ * @author Evan Savillo
+ * @author Chris Marcello
+ * @author Yi Feng
  */
 public class Main extends Application
 {
@@ -36,6 +41,8 @@ public class Main extends Application
             "Yi Feng, Iris Lian, Christopher Marcello, and Evan Savillo's Project 4";
 
     /**
+     * Takes in a stage and loads the FXML, creates the controller,
+     * and initializes a scene. 
      *
      * @param stage The stage that contains the window content
      */
@@ -49,11 +56,10 @@ public class Main extends Application
 
         // set controller and stage
         Controller controller = loader.getController();
-        controller.fileMenuController.setPrimaryStage(stage);
+        controller.setPrimaryStage(stage);
 
         // initialize a scene and add features specified in the css file to the scene
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        scene.getStylesheets().add("/proj4FengLianMarcelloSavillo/Main.css");
         scene.getStylesheets().add("/proj4FengLianMarcelloSavillo/java-keywords.css");
 
         // configure the stage
