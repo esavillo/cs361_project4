@@ -59,6 +59,8 @@ public class Main extends Application
         controller.setPrimaryStage(stage);
 
         // eats the command to quit from the window itself
+        // minor behavior issue currently but not a real bug
+        // when quitting is prompts dialog twice on cancel after confirmed save
         stage.setOnCloseRequest(event -> {
             event.consume();
             controller.handleExitMenuItemAction();
