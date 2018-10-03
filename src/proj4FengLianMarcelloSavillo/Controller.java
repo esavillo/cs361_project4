@@ -140,7 +140,7 @@ public class Controller
      * Exits the program when the Exit button is clicked.
      */
     @FXML
-    private void handleExitMenuItemAction()
+    void handleExitMenuItemAction()
     {
         fileMenuController.handleExitMenuItemAction();
     }
@@ -262,12 +262,6 @@ public class Controller
     {
         fileMenuController.recieveFXMLElements(this.passFXMLElements());
         editMenuController.recieveFXMLElements(this.passFXMLElements());
-
-        // eats the command to quit from the window itself
-        fileMenuController.primaryStage.setOnCloseRequest(event -> {
-            event.consume();
-            this.handleExitMenuItemAction();
-        });
 
         this.handleNewMenuItemAction();
     }
